@@ -1,0 +1,42 @@
+/* Neubrutalism-inspired: monochrome surfaces, a single sunny yellow, geometric type. */
+.neubrutalism-theme {
+  --neubrutalism-canvas: #fff;
+  --neubrutalism-panel: #fff;
+  --neubrutalism-card: #f4f4f4;
+  --neubrutalism-ink: #000;
+  --neubrutalism-muted: #5a5a5a;
+  --neubrutalism-line: #d6d6d6;
+  --neubrutalism-track: #dedede;
+  --neubrutalism-yellow: #fcc31e;
+  --neubrutalism-green: #000;
+  --neubrutalism-green-fill: #fcc31e;
+  --neubrutalism-green-soft: #fff2bd;
+  --neubrutalism-accent-text: #000;
+  --neubrutalism-red: #b12323;
+  --neubrutalism-red-soft: #fff0ee;
+  --neubrutalism-amber: #895300;
+  --neubrutalism-amber-soft: #fff4d5;
+  --neubrutalism-font:
+    "Century Gothic", "Avenir Next", Avenir, "Microsoft YaHei", "PingFang SC",
+    sans-serif;
+  --neubrutalism-display: var(--neubrutalism-font);
+  --neubrutalism-focus: 3px solid #896400;
+  color-scheme: light;
+}
+.neubrutalism-theme[data-color-scheme="dark"] {
+  --neubrutalism-canvas: #161616;
+  --neubrutalism-panel: #202020;
+  --neubrutalism-card: #272727;
+  --neubrutalism-ink: #fff;
+  --neubrutalism-muted: #bdbdbd;
+  --neubrutalism-line: #525252;
+  --neubrutalism-track: #505050;
+  --neubrutalism-green: #fcc31e;
+  --neubrutalism-green-soft: #40381b;
+  --neubrutalism-red: #ffaaa3;
+  --neubrutalism-red-soft: #4b2525;
+  --neubrutalism-amber: #f4ca6c;
+  --neubrutalism-amber-soft: #3c321e;
+  --neubrutalism-focus: 3px solid #fcc31e;
+  color-scheme: dark;
+}

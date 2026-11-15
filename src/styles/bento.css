@@ -1,0 +1,421 @@
+/* Bento board: tiles of different sizes and colours with thick outlines and
+   hard shadows, plus a floating action bar for the add flows. */
+.neubrutalism-theme {
+  --neubrutalism-tile-1: #fcc31e;
+  --neubrutalism-tile-2: #ff90c2;
+  --neubrutalism-tile-3: #7ad7f0;
+  --neubrutalism-tile-4: #b6f36a;
+  --neubrutalism-tile-5: #ffb36b;
+  --neubrutalism-tile-6: #c7b5ff;
+  /* Light tiles share one black outline; dark tiles take their own bright edge. */
+  --neubrutalism-edge-1: #000;
+  --neubrutalism-edge-2: #000;
+  --neubrutalism-edge-3: #000;
+  --neubrutalism-edge-4: #000;
+  --neubrutalism-edge-5: #000;
+  --neubrutalism-edge-6: #000;
+  --neubrutalism-tile-ink: #000;
+  --neubrutalism-tile-muted: rgb(0 0 0 / 72%);
+  --neubrutalism-tile-chip: #fff;
+  --neubrutalism-tile-track: rgb(255 255 255 / 55%);
+  --neubrutalism-bar-surface: #fff;
+  --neubrutalism-bar-edge: #000;
+  --neubrutalism-bar-shadow: #000;
+  --neubrutalism-bar-item: #fff;
+  --neubrutalism-bar-ink: #000;
+  /* The floating action bar is 74px tall (48px buttons, 10px padding, 3px
+     outline) and sits this far above the bottom edge; the content keeps the
+     bar, its offset and a 24px gap free. Wrapped in calc() so DOMs without
+     full max() support (the tests' happy-dom) still resolve it. */
+  --neubrutalism-bar-bottom: calc(max(20px, env(safe-area-inset-bottom)));
+  --neubrutalism-bar-reserve: calc(var(--neubrutalism-bar-bottom) + 98px);
+}
+/* Dark tiles: deep, desaturated blocks of the light colours, outlined and
+   shadowed with the light colour itself so the board keeps its colour clash. */
+.neubrutalism-theme[data-color-scheme="dark"] {
+  --neubrutalism-tile-1: #3a2e07;
+  --neubrutalism-tile-2: #46192f;
+  --neubrutalism-tile-3: #0f3340;
+  --neubrutalism-tile-4: #243b0e;
+  --neubrutalism-tile-5: #45260c;
+  --neubrutalism-tile-6: #29214d;
+  --neubrutalism-edge-1: #fcc31e;
+  --neubrutalism-edge-2: #ff90c2;
+  --neubrutalism-edge-3: #7ad7f0;
+  --neubrutalism-edge-4: #b6f36a;
+  --neubrutalism-edge-5: #ffb36b;
+  --neubrutalism-edge-6: #c7b5ff;
+  --neubrutalism-tile-ink: #fff;
+  --neubrutalism-tile-muted: #d8d8d8;
+  --neubrutalism-tile-chip: #111;
+  --neubrutalism-tile-track: rgb(0 0 0 / 45%);
+  --neubrutalism-bar-surface: #202020;
+  --neubrutalism-bar-edge: #fff;
+  --neubrutalism-bar-shadow: #fcc31e;
+  --neubrutalism-bar-item: #2c2c2c;
+  --neubrutalism-bar-ink: #fff;
+}
+/* Leave room under the content for the floating bar, so the last card can be
+   scrolled clear of it. */
+.neubrutalism-theme .neubrutalism-workspace {
+  padding-bottom: var(--neubrutalism-bar-reserve);
+}
+
+/* Header: a black slab with a chunky wordmark. */
+.neubrutalism-theme .neubrutalism-brand-name {
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+.neubrutalism-theme .neubrutalism-search {
+  border-width: 3px;
+  box-shadow: 4px 4px 0 var(--neubrutalism-ink);
+}
+.neubrutalism-theme[data-color-scheme="dark"] .neubrutalism-search,
+.neubrutalism-theme[data-color-scheme="dark"] .neubrutalism-menu-popover {
+  box-shadow: 4px 4px 0 var(--neubrutalism-yellow);
+}
+
+/* Board. Each row holds a wide lead tile and small ones, changing sides every
+   row; tileSpans() in theme.js sets the spans from the real column count. */
+.neubrutalism-theme .neubrutalism-account-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: minmax(196px, auto);
+  grid-auto-flow: row dense;
+  gap: 18px;
+}
+.neubrutalism-theme .neubrutalism-account-grid > .neubrutalism-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  --neubrutalism-tile: var(--neubrutalism-tile-1);
+  --neubrutalism-edge: var(--neubrutalism-edge-1);
+  padding: 18px;
+  border: 3px solid var(--neubrutalism-edge);
+  border-radius: 22px;
+  background: var(--neubrutalism-tile);
+  color: var(--neubrutalism-tile-ink);
+  box-shadow: 6px 6px 0 var(--neubrutalism-edge);
+  transition:
+    transform 120ms,
+    box-shadow 120ms;
+}
+/* Only a mouse lights the card, and only where a click copies the current code:
+   not on the menu (the card flashed when it was opened) or another button such as
+   "next", which copies the next code. Touch keeps the hover after a tap. */
+@media (hover: hover) {
+  .neubrutalism-theme
+    .neubrutalism-account-grid
+    > .neubrutalism-card:hover:not(:has(.neubrutalism-account-menu:hover)):not(
+      :has(button:not([data-action="copy"]):hover)
+    ) {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0 var(--neubrutalism-edge);
+  }
+}
+/* The code copies the same as the rest of the card, which already lifts, so it
+   adds no highlight of its own. */
+@media (hover: hover) {
+  .neubrutalism-theme
+    .neubrutalism-account-grid
+    > .neubrutalism-card
+    .neubrutalism-copy-code:not(:disabled):hover {
+    background: transparent;
+    color: inherit;
+  }
+}
+@media (hover: none) {
+  .neubrutalism-theme
+    .neubrutalism-account-grid
+    > .neubrutalism-card
+    .neubrutalism-copy-code:not(:disabled):active {
+    background: transparent;
+    color: inherit;
+  }
+}
+.neubrutalism-theme
+  .neubrutalism-account-grid
+  > .neubrutalism-card:nth-child(6n + 2) {
+  --neubrutalism-tile: var(--neubrutalism-tile-2);
+  --neubrutalism-edge: var(--neubrutalism-edge-2);
+}
+.neubrutalism-theme
+  .neubrutalism-account-grid
+  > .neubrutalism-card:nth-child(6n + 3) {
+  --neubrutalism-tile: var(--neubrutalism-tile-3);
+  --neubrutalism-edge: var(--neubrutalism-edge-3);
+}
+.neubrutalism-theme
+  .neubrutalism-account-grid
+  > .neubrutalism-card:nth-child(6n + 4) {
+  --neubrutalism-tile: var(--neubrutalism-tile-4);
+  --neubrutalism-edge: var(--neubrutalism-edge-4);
+}
+.neubrutalism-theme
+  .neubrutalism-account-grid
+  > .neubrutalism-card:nth-child(6n + 5) {
+  --neubrutalism-tile: var(--neubrutalism-tile-5);
+  --neubrutalism-edge: var(--neubrutalism-edge-5);
+}
+.neubrutalism-theme
+  .neubrutalism-account-grid
+  > .neubrutalism-card:nth-child(6n) {
+  --neubrutalism-tile: var(--neubrutalism-tile-6);
+  --neubrutalism-edge: var(--neubrutalism-edge-6);
+}
+.neubrutalism-theme
+  .neubrutalism-account-grid
+  > .neubrutalism-card
+  :is(
+    .neubrutalism-account-address,
+    .neubrutalism-otp-next,
+    .neubrutalism-expiry-label,
+    .neubrutalism-code-status
+  ) {
+  color: var(--neubrutalism-tile-muted);
+}
+.neubrutalism-theme
+  .neubrutalism-account-grid
+  > .neubrutalism-card
+  .neubrutalism-service-mark {
+  border: 3px solid var(--neubrutalism-edge);
+  background: var(--neubrutalism-tile-chip);
+  color: var(--neubrutalism-tile-ink);
+}
+.neubrutalism-theme
+  .neubrutalism-account-grid
+  > .neubrutalism-card
+  .neubrutalism-codes {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.neubrutalism-theme
+  .neubrutalism-account-grid
+  > .neubrutalism-card
+  .neubrutalism-copy-symbol {
+  border: 2px solid var(--neubrutalism-edge);
+  background: var(--neubrutalism-tile-chip);
+  color: var(--neubrutalism-tile-ink);
+}
+.neubrutalism-theme
+  .neubrutalism-account-grid
+  > .neubrutalism-card
+  .neubrutalism-progress {
+  height: 12px;
+  border: 2px solid var(--neubrutalism-edge);
+  border-radius: 999px;
+  background: var(--neubrutalism-tile-track);
+}
+.neubrutalism-theme
+  .neubrutalism-account-grid
+  > .neubrutalism-card
+  .neubrutalism-progress-fill {
+  background: var(--neubrutalism-edge);
+}
+.neubrutalism-theme
+  .neubrutalism-account-grid
+  > .neubrutalism-card
+  :is(
+    .neubrutalism-account-menu > .neubrutalism-button,
+    .neubrutalism-hotp-label
+  ) {
+  color: var(--neubrutalism-tile-ink);
+}
+.neubrutalism-theme[data-color-scheme="dark"]
+  .neubrutalism-account-grid
+  > .neubrutalism-card
+  .neubrutalism-hotp-label {
+  border-color: var(--neubrutalism-edge);
+}
+.neubrutalism-theme
+  .neubrutalism-account-grid
+  > .neubrutalism-card[data-wide="true"]
+  .neubrutalism-otp-value {
+  font-size: clamp(44px, 4vw, 56px);
+  letter-spacing: -0.01em;
+}
+.neubrutalism-theme
+  .neubrutalism-account-grid
+  > .neubrutalism-card[data-wide="true"]
+  .neubrutalism-account-name {
+  font-size: 24px;
+}
+.neubrutalism-theme
+  .neubrutalism-account-grid
+  > .neubrutalism-card[data-wide="true"]
+  .neubrutalism-service-mark {
+  width: 48px;
+  height: 48px;
+  font-size: 24px;
+}
+/* Compact keeps the colours, borders and hard shadows and takes out air:
+   about 190px instead of 260px on a desktop. */
+.neubrutalism-theme[data-density="compact"] .neubrutalism-account-grid {
+  grid-auto-rows: auto;
+  gap: 12px;
+}
+.neubrutalism-theme[data-density="compact"]
+  .neubrutalism-account-grid
+  > .neubrutalism-card {
+  padding: 12px 14px;
+}
+.neubrutalism-theme[data-density="compact"] .neubrutalism-card-header {
+  margin-bottom: 4px;
+}
+.neubrutalism-theme[data-density="compact"] .neubrutalism-copy-code {
+  min-height: 44px;
+}
+.neubrutalism-theme[data-density="compact"] .neubrutalism-otp-value {
+  font-size: 32px;
+}
+.neubrutalism-theme[data-density="compact"]
+  .neubrutalism-account-grid
+  > .neubrutalism-card[data-wide="true"]
+  .neubrutalism-otp-value {
+  font-size: 44px;
+}
+.neubrutalism-theme[data-density="compact"] .neubrutalism-otp-next {
+  min-height: 32px;
+}
+.neubrutalism-theme[data-density="compact"] .neubrutalism-expiry {
+  margin-top: 2px;
+}
+.neubrutalism-theme .neubrutalism-group-title {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 4px 14px;
+  border: 3px solid var(--neubrutalism-ink);
+  border-radius: 999px;
+  background: var(--neubrutalism-panel);
+  box-shadow: 3px 3px 0 var(--neubrutalism-ink);
+  color: var(--neubrutalism-ink);
+  font-weight: 800;
+}
+
+/* Floating action bar. */
+.neubrutalism-theme .neubrutalism-actionbar {
+  position: fixed;
+  z-index: 60;
+  left: 50%;
+  bottom: var(--neubrutalism-bar-bottom);
+  display: flex;
+  gap: 10px;
+  max-width: calc(100vw - 24px);
+  padding: 10px;
+  border: 3px solid var(--neubrutalism-bar-edge);
+  border-radius: 999px;
+  background: var(--neubrutalism-bar-surface);
+  box-shadow: 6px 6px 0 var(--neubrutalism-bar-shadow);
+  transform: translateX(-50%);
+}
+.neubrutalism-theme .neubrutalism-actionbar-item {
+  min-height: 48px;
+  padding: 10px 22px;
+  border: 3px solid var(--neubrutalism-bar-edge);
+  border-radius: 999px;
+  background: var(--neubrutalism-bar-item);
+  color: var(--neubrutalism-bar-ink);
+  font-weight: 800;
+  white-space: nowrap;
+}
+.neubrutalism-theme .neubrutalism-actionbar-item.is-primary {
+  border-color: var(--neubrutalism-bar-edge);
+  background: var(--neubrutalism-yellow);
+  color: #000;
+}
+@media (hover: hover) {
+  .neubrutalism-theme .neubrutalism-actionbar-item:not(:disabled):hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--neubrutalism-bar-shadow);
+  }
+}
+@media (hover: none) {
+  .neubrutalism-theme .neubrutalism-actionbar-item:not(:disabled):active {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--neubrutalism-bar-shadow);
+  }
+}
+
+@media (max-width: 1100px) {
+  .neubrutalism-theme .neubrutalism-account-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .neubrutalism-theme .neubrutalism-account-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: minmax(160px, auto);
+    gap: 14px;
+  }
+}
+@media (max-width: 520px) {
+  .neubrutalism-theme .neubrutalism-account-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .neubrutalism-theme .neubrutalism-account-grid > .neubrutalism-card {
+    padding: 16px;
+  }
+  .neubrutalism-theme[data-density="compact"]
+    .neubrutalism-account-grid
+    > .neubrutalism-card {
+    padding: 12px 14px;
+  }
+  .neubrutalism-theme .neubrutalism-actionbar {
+    right: 12px;
+    left: 12px;
+    justify-content: stretch;
+    transform: none;
+  }
+  .neubrutalism-theme .neubrutalism-actionbar-item {
+    flex: 1 1 0;
+    padding-inline: 12px;
+  }
+}
+
+/* Copying presses the card, like the built-in view. The card copies from anywhere but
+   its menu and other controls (copyFromCard), so those do not press it. */
+.neubrutalism-theme
+  .neubrutalism-account-grid
+  > .neubrutalism-card:active:not(
+    :has(
+      .neubrutalism-account-menu :active,
+      :is(
+        a,
+        input,
+        select,
+        textarea,
+        label,
+        button:not([data-action="copy"], [data-action="next"])
+      ):active
+    )
+  ) {
+  transform: translate(4px, 4px);
+  box-shadow: 2px 2px 0 var(--neubrutalism-edge);
+}
+@media (prefers-reduced-motion: reduce) {
+  .neubrutalism-theme
+    .neubrutalism-account-grid
+    > .neubrutalism-card:active:not(
+      :has(
+        .neubrutalism-account-menu :active,
+        :is(
+          a,
+          input,
+          select,
+          textarea,
+          label,
+          button:not([data-action="copy"], [data-action="next"])
+        ):active
+      )
+    ) {
+    transform: none;
+  }
+}
+
+/* The browser's tap highlight is a square over rounded controls; pressing
+   shows the control's own hover look instead (@media (hover: none) twins). */
+.neubrutalism-theme {
+  -webkit-tap-highlight-color: transparent;
+}

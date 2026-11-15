@@ -1,0 +1,365 @@
+.neubrutalism-theme .neubrutalism-notice {
+  position: fixed;
+  z-index: 100;
+  left: 50%;
+  top: 50%;
+  bottom: auto;
+  width: max-content;
+  max-width: min(520px, calc(100vw - 32px));
+  min-height: 48px;
+  padding: 14px 20px;
+  transform: translate(-50%, -50%);
+  border: 2px solid var(--neubrutalism-ink);
+  border-radius: 10px;
+  background: var(--neubrutalism-panel);
+  color: var(--neubrutalism-ink);
+  box-shadow: 4px 5px 0#000;
+  text-align: center;
+  overflow-wrap: anywhere;
+  pointer-events: none;
+}
+.neubrutalism-theme .neubrutalism-notice[data-kind="success"] {
+  background: var(--neubrutalism-yellow);
+  color: #000;
+  border-color: #000;
+}
+.neubrutalism-theme .neubrutalism-notice[data-kind="error"] {
+  border-color: var(--neubrutalism-red);
+}
+.neubrutalism-theme .neubrutalism-states {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.neubrutalism-theme .neubrutalism-states:empty {
+  display: none;
+}
+.neubrutalism-theme .neubrutalism-state {
+  padding: 8px 14px;
+  border: 1px solid var(--neubrutalism-line);
+  border-radius: 8px;
+  color: var(--neubrutalism-muted);
+  font-size: 13px;
+}
+.neubrutalism-theme .neubrutalism-operation-region,
+.neubrutalism-theme .neubrutalism-queue-region {
+  margin-bottom: 24px;
+  padding: 20px;
+  border: 2px solid var(--neubrutalism-amber);
+  border-radius: 12px;
+  background: var(--neubrutalism-amber-soft);
+}
+.neubrutalism-theme
+  :is(.neubrutalism-operation-region, .neubrutalism-queue-region)
+  > .neubrutalism-group-title {
+  margin-bottom: 8px;
+  color: var(--neubrutalism-ink);
+}
+.neubrutalism-theme .neubrutalism-operation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-top: 12px;
+  font-size: 13px;
+}
+.neubrutalism-theme .neubrutalism-operation > * {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.neubrutalism-theme .neubrutalism-queue-region > .neubrutalism-button {
+  margin: 4px 6px 4px 0;
+}
+.neubrutalism-theme .neubrutalism-management-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+.neubrutalism-theme .neubrutalism-management-groups {
+  display: grid;
+  gap: 16px;
+}
+.neubrutalism-theme .neubrutalism-management-group {
+  padding: 8px 20px;
+  border-radius: 16px;
+  background: var(--neubrutalism-card);
+}
+.neubrutalism-theme .neubrutalism-group-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 60px;
+  padding: 12px 4px;
+  border: 0;
+  background: transparent;
+  font-size: 18px;
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+}
+.neubrutalism-theme .neubrutalism-group-toggle::after {
+  content: "+";
+  flex: 0 0 auto;
+  font-size: 26px;
+  font-weight: 400;
+}
+.neubrutalism-theme .neubrutalism-group-toggle[aria-expanded="true"]::after {
+  content: "−";
+}
+.neubrutalism-theme .neubrutalism-management-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding-bottom: 16px;
+}
+.neubrutalism-theme .neubrutalism-feature,
+.neubrutalism-theme .neubrutalism-about-item,
+.neubrutalism-theme .neubrutalism-management-list > .neubrutalism-button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
+  min-height: 48px;
+  padding: 12px;
+  border: 1px solid var(--neubrutalism-line);
+  background: var(--neubrutalism-panel);
+  text-align: left;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+@media (hover: hover) {
+  .neubrutalism-theme .neubrutalism-feature:not(:disabled):hover,
+  .neubrutalism-theme .neubrutalism-about-item:hover {
+    background: var(--neubrutalism-green-soft);
+  }
+}
+@media (hover: none) {
+  .neubrutalism-theme .neubrutalism-feature:not(:disabled):active,
+  .neubrutalism-theme .neubrutalism-about-item:active {
+    background: var(--neubrutalism-green-soft);
+  }
+}
+.neubrutalism-theme .neubrutalism-feature small {
+  color: var(--neubrutalism-muted);
+  font-size: 12px;
+}
+/* The 2FA version and project links sit before the App group, on a panel
+   like the groups above and with items like theirs; the version and a newer
+   release are stickers with hard shadows. */
+.neubrutalism-theme .neubrutalism-about {
+  padding: 8px 20px 16px;
+  border-radius: 16px;
+  background: var(--neubrutalism-card);
+}
+.neubrutalism-theme .neubrutalism-about-title {
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+  padding: 12px 4px;
+  font-size: 18px;
+  font-weight: 800;
+}
+.neubrutalism-theme .neubrutalism-about-version {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 14px;
+  padding: 0 4px 16px;
+}
+.neubrutalism-theme .neubrutalism-about-version > span,
+.neubrutalism-theme .neubrutalism-about-update {
+  padding: 4px 10px;
+  border: 2px solid var(--neubrutalism-ink);
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 var(--neubrutalism-ink);
+  font-weight: 800;
+}
+.neubrutalism-theme .neubrutalism-about-version > span {
+  background: var(--neubrutalism-panel);
+  color: var(--neubrutalism-ink);
+  font-variant-numeric: tabular-nums;
+}
+.neubrutalism-theme .neubrutalism-about-update {
+  background: var(--neubrutalism-yellow);
+  color: #000;
+  text-decoration: none;
+}
+@media (hover: hover) {
+  .neubrutalism-theme .neubrutalism-about-update:hover {
+    background: #ffd454;
+  }
+}
+@media (hover: none) {
+  .neubrutalism-theme .neubrutalism-about-update:active {
+    background: #ffd454;
+  }
+}
+.neubrutalism-theme .neubrutalism-about-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+/* Links take the rounding the theme gives its buttons. */
+.neubrutalism-theme a.neubrutalism-about-item {
+  border-radius: 12px;
+  text-decoration: none;
+}
+@media (max-width: 1050px) {
+  .neubrutalism-theme .neubrutalism-account-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .neubrutalism-theme .neubrutalism-display-panel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .neubrutalism-theme .neubrutalism-topbar-inner {
+    padding: 14px 24px;
+    gap: 20px;
+  }
+  .neubrutalism-theme .neubrutalism-brand-name {
+    font-size: 32px;
+  }
+  .neubrutalism-theme .neubrutalism-topbar-actions {
+    gap: 8px;
+  }
+  .neubrutalism-theme .neubrutalism-topbar-actions .neubrutalism-button {
+    padding-inline: 12px;
+    font-size: 13px;
+  }
+  .neubrutalism-theme .neubrutalism-workspace {
+    padding: 24px;
+  }
+  .neubrutalism-theme .neubrutalism-card {
+    padding: 20px;
+  }
+  .neubrutalism-theme .neubrutalism-account-grid {
+    gap: 16px;
+  }
+  .neubrutalism-theme .neubrutalism-otp-value {
+    font-size: 33px;
+  }
+}
+@media (max-width: 600px) {
+  .neubrutalism-theme .neubrutalism-topbar-inner {
+    gap: 12px;
+    padding: 14px 20px;
+  }
+  .neubrutalism-theme .neubrutalism-topbar-actions {
+    justify-content: flex-end;
+    gap: 4px;
+  }
+  .neubrutalism-theme .neubrutalism-topbar-actions .neubrutalism-button {
+    padding: 8px 10px;
+  }
+  .neubrutalism-theme .neubrutalism-workspace {
+    padding: 22px 20px 24px;
+  }
+  .neubrutalism-theme .neubrutalism-section-title {
+    font-size: 26px;
+  }
+  .neubrutalism-theme .neubrutalism-toolbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+  }
+  .neubrutalism-theme .neubrutalism-account-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .neubrutalism-theme .neubrutalism-card {
+    padding: 20px;
+  }
+  .neubrutalism-theme .neubrutalism-otp-value {
+    font-size: 40px;
+  }
+  .neubrutalism-theme .neubrutalism-display-panel {
+    padding: 14px;
+  }
+  .neubrutalism-theme .neubrutalism-management-list,
+  .neubrutalism-theme .neubrutalism-about-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .neubrutalism-theme .neubrutalism-footer {
+    margin-top: 32px;
+  }
+}
+@media (max-width: 360px) {
+  .neubrutalism-theme .neubrutalism-topbar-inner,
+  .neubrutalism-theme .neubrutalism-workspace {
+    padding-inline: 16px;
+  }
+  .neubrutalism-theme .neubrutalism-topbar-actions {
+    gap: 0;
+  }
+  .neubrutalism-theme .neubrutalism-topbar-actions .neubrutalism-button {
+    padding-inline: 8px;
+    font-size: 12px;
+  }
+  .neubrutalism-theme .neubrutalism-card {
+    padding: 18px;
+  }
+  .neubrutalism-theme .neubrutalism-otp-value {
+    font-size: 36px;
+  }
+  .neubrutalism-theme .neubrutalism-display-panel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.neubrutalism-theme[data-reduced-motion="true"] *,
+.neubrutalism-theme[data-reduced-motion="true"] *::before,
+.neubrutalism-theme[data-reduced-motion="true"] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .neubrutalism-theme *,
+  .neubrutalism-theme *::before,
+  .neubrutalism-theme *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+@media (forced-colors: active) {
+  .neubrutalism-theme
+    :is(
+      .neubrutalism-card,
+      .neubrutalism-button,
+      .neubrutalism-menu-popover,
+      .neubrutalism-notice
+    ) {
+    border-color: ButtonText;
+    box-shadow: none;
+  }
+  .neubrutalism-theme .neubrutalism-button[aria-expanded="true"] {
+    outline: 2px solid Highlight;
+    outline-offset: -3px;
+  }
+  .neubrutalism-theme .neubrutalism-copy-code:disabled {
+    color: GrayText;
+  }
+  .neubrutalism-theme .neubrutalism-progress {
+    background: Canvas;
+    outline: 1px solid CanvasText;
+  }
+  .neubrutalism-theme .neubrutalism-progress-fill {
+    background: Highlight;
+    forced-color-adjust: none;
+  }
+}
+@media (max-width: 600px) {
+  .neubrutalism-theme .neubrutalism-topbar-actions {
+    width: auto;
+  }
+}
+
+/* The whole card copies its current code. */
+.neubrutalism-theme .neubrutalism-card {
+  cursor: pointer;
+}

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Neubrutalism · 新粗野主义 · 2FA 主题预览</title>
+    <link rel="stylesheet" href="/src/styles/tokens.css" />
+    <link rel="stylesheet" href="/src/styles/components.css" />
+    <link rel="stylesheet" href="/src/styles/application.css" />
+    <link rel="stylesheet" href="/src/styles/bento.css" />
+    <style>
+      body {
+        margin: 0;
+      }
+      .dev-banner {
+        padding: 8px 20px;
+        background: #f2f2f2;
+        color: #333;
+        font: 12px/1.5 system-ui;
+        border-top: 1px solid #ddd;
+      }
+      .dev-banner summary {
+        cursor: pointer;
+      }
+      .dev-controls {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+        padding-block: 12px;
+      }
+      .dev-controls select {
+        font: inherit;
+        padding: 4px;
+        max-width: 180px;
+      }
+      #dev-output {
+        max-height: 90px;
+        overflow: auto;
+        margin: 0;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      #dev-host-dialog {
+        width: min(440px, calc(100% - 32px));
+        padding: 24px;
+        border: 2px solid #000;
+        border-radius: 12px;
+        background: #fff;
+        color: #000;
+        box-shadow: 0 5px 0 #000;
+        font:
+          15px/1.6 "Century Gothic",
+          "Microsoft YaHei",
+          sans-serif;
+      }
+      #dev-host-dialog::backdrop {
+        background: #0008;
+      }
+      #dev-host-dialog h2 {
+        margin: 0;
+        font-size: 24px;
+      }
+      #dev-host-dialog p {
+        margin: 16px 0 24px;
+      }
+      #dev-host-dialog button {
+        min-height: 44px;
+        padding: 8px 24px;
+        border: 2px solid #000;
+        border-radius: 8px;
+        background: #fcc31e;
+        color: #000;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      #dev-host-dialog button:focus-visible {
+        outline: 3px solid #896400;
+        outline-offset: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <dialog
+      id="dev-host-dialog"
+      aria-labelledby="dev-host-title"
+      aria-describedby="dev-host-description"
+    >
+      <h2 id="dev-host-title"></h2>
+      <p id="dev-host-description"></p>
+      <form method="dialog"><button id="dev-host-close">关闭</button></form>
+    </dialog>
+    <div id="app"></div>
+    <details class="dev-banner">
+      <summary>合成预览 · 示例账号，不访问真实数据 · 展开调节预览</summary>
+      <p>
+        此开发壳使用合成账户与时间；复制和主机流程仅记录调用，不写入剪贴板或服务器。
+      </p>
+      <div class="dev-controls">
+        <label
+          >语言
+          <select id="dev-language"></select
+        ></label>
+        <label
+          >模式
+          <select id="dev-theme">
+            <option value="light">浅色</option>
+            <option value="dark">深色</option>
+          </select></label
+        >
+        <label
+          >状态
+          <select id="dev-state">
+            <option value="ready">正常账号</option>
+            <option value="empty">空账号</option>
+            <option value="loading">加载中</option>
+            <option value="error">加载失败</option>
+            <option value="offline">离线快照</option>
+            <option value="signed-out">未登录</option>
+            <option value="long-text">长名称</option>
+          </select></label
+        >
+      </div>
+      <pre id="dev-output" aria-live="polite"></pre>
+    </details>
+    <script type="module" src="/dev/main.js"></script>
+  </body>
+</html>
